@@ -10,11 +10,6 @@ public class Player_mov : MonoBehaviour
     //Vitesse de mouvement 
     public float moveSpeed = 10f;
 
-    //Variables pour la camera 
-    public new Camera camera;
-    public float cameraOffsetX;
-    public float cameraOffsetY;
-
     private Rigidbody rigidbody; 
     private Animator animator;
 
@@ -27,7 +22,7 @@ public class Player_mov : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         //Création du déplacement du joueur en fonction du joystick
         rigidbody.velocity = new Vector3(- joystick.Vertical * moveSpeed, rigidbody.velocity.y, joystick.Horizontal * moveSpeed);

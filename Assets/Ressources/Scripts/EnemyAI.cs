@@ -37,9 +37,9 @@ public class EnemyAI : MonoBehaviour
             if(Distance > chaseRange)
             {
                 //On se repose
-                //Idle();
+                Idle();
                 // On patrouille simplement 
-                Patroling();
+                //Patroling();
             }
 
             if (Distance <= chaseRange)
