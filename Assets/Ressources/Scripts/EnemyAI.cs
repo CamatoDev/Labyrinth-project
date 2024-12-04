@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
     // Variables pour gérer la navigation auto de l'ennemi
     private NavMeshAgent agent;
     private float Distance;
+    private float DistanceToBase;
+    private Vector3 basePosition;
     public float patrolingSpeed = 2.0f;
     public float chaseRange = 4.0f;
     public float attackRange = 1.3f;
@@ -24,6 +26,7 @@ public class EnemyAI : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = gameObject.GetComponent<Animator>();
+        basePosition = transform.position;
     }
 
     // Update is called once per frame
@@ -32,9 +35,12 @@ public class EnemyAI : MonoBehaviour
         // Calcul de la distance entre l'ennemi et le joueur 
         Distance = Vector3.Distance(transform.position, target.position);
 
+        // Calcul de la distance entre l'ennemi et sa position de base 
+        DistanceToBase = Vector3.Distance(basePosition, transform.position);
+
         if (target != null)
         {
-            if(Distance > chaseRange)
+            if(Distance > chaseRange && DistanceToBase <= 0.6)
             {
                 //On se repose
                 Idle();
@@ -42,7 +48,7 @@ public class EnemyAI : MonoBehaviour
                 //Patroling();
             }
 
-            if (Distance <= chaseRange)
+            if (Distance <= chaseRange && Distance > attackRange)
             {
                 // On pourchase le joueur 
                 Chase();
@@ -52,6 +58,12 @@ public class EnemyAI : MonoBehaviour
             {
                 // On attaque le joueur 
                 Attack();
+            }
+
+            if(Distance > chaseRange && DistanceToBase > 0.6)
+            {
+                // On rentre à la base 
+                BackToBase();
             }
         }
     }
@@ -84,7 +96,15 @@ public class EnemyAI : MonoBehaviour
     {
         // L'ennemi s'arrête 
         agent.destination = transform.position;
-        Debug.Log("Attaque...");
+        animator.SetFloat("State", 2.0f, 0.2f, Time.deltaTime);
+    }
+
+    // Fonction pour le retour à la base 
+    public void BackToBase()
+    {
+        agent.speed = patrolingSpeed;
+        agent.destination = basePosition;
+        animator.SetFloat("State", 0.5f, 0.4f, Time.deltaTime);
     }
 
     public void OnDrawGizmos()
