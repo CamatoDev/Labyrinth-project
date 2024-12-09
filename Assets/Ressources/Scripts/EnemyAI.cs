@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAI : MonoBehaviour
 {
     // Variables pour gérer la navigation auto de l'ennemi
     private NavMeshAgent agent;
+    private FieldOfView fieldOfView;
     private float Distance;
     private float DistanceToBase;
     private Vector3 basePosition;
     public float patrolingSpeed = 2.0f;
     public float chaseRange = 4.0f;
+    public float followDistance = 6.5f;
+    bool followPlayer = false;
+
+    // Porté des attaques
     public float attackRange = 1.3f;
+
+    // Timing des attques 
+    public float attackRepeatTime = 2f;
+    private float attackTime;
+
+    // Puissance des dégats
+    public float TheDamage = 20;
+
 
     // Variable pour la cible
     private Transform target;
@@ -24,23 +38,29 @@ public class EnemyAI : MonoBehaviour
     {
         // On passe les components dans les variables correspondante
         agent = gameObject.GetComponent<NavMeshAgent>();
+        fieldOfView = gameObject.GetComponent<FieldOfView>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = gameObject.GetComponent<Animator>();
         basePosition = transform.position;
+        attackTime = Time.time;
+        followPlayer = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         // Calcul de la distance entre l'ennemi et le joueur 
-        Distance = Vector3.Distance(transform.position, target.position);
+        if(target != null)
+        {
+            Distance = Vector3.Distance(transform.position, target.position);
+        }
 
         // Calcul de la distance entre l'ennemi et sa position de base 
         DistanceToBase = Vector3.Distance(basePosition, transform.position);
 
         if (target != null)
         {
-            if(Distance > chaseRange && DistanceToBase <= 0.6)
+            if(!fieldOfView.canSeePlayer && DistanceToBase <= 0.6 && !followPlayer)
             {
                 //On se repose
                 Idle();
@@ -48,22 +68,33 @@ public class EnemyAI : MonoBehaviour
                 //Patroling();
             }
 
-            if (Distance <= chaseRange && Distance > attackRange)
+            if (fieldOfView.canSeePlayer && Distance > attackRange)
+            {
+                // On pourchase le joueur 
+                Chase();
+            }
+            if (followPlayer)
             {
                 // On pourchase le joueur 
                 Chase();
             }
 
-            if(Distance <= attackRange)
+            if(fieldOfView.canSeePlayer && Distance <= attackRange)
             {
                 // On attaque le joueur 
                 Attack();
             }
 
-            if(Distance > chaseRange && DistanceToBase > 0.6)
+            if(!fieldOfView.canSeePlayer && DistanceToBase > 0.6 && !followPlayer || Player_stats.isDead)
             {
                 // On rentre à la base 
                 BackToBase();
+            }
+
+            // On arrête de poursuivre le jouer si 
+            if(Distance >= followDistance)
+            {
+                followPlayer = false;
             }
         }
     }
@@ -87,6 +118,7 @@ public class EnemyAI : MonoBehaviour
     // Fonction pour la chase
     public void Chase()
     {
+        followPlayer = true;
         agent.destination = target.position;
         animator.SetFloat("State", 1.0f, 0.2f, Time.deltaTime);
     }
@@ -95,8 +127,16 @@ public class EnemyAI : MonoBehaviour
     public void Attack()
     {
         // L'ennemi s'arrête 
-        agent.destination = transform.position;
         animator.SetFloat("State", 2.0f, 0.2f, Time.deltaTime);
+        agent.destination = transform.position;
+
+        //pas de cooldown
+        if (Time.time > attackTime && target.GetComponent<Player_stats>().currentHealth > 0)
+        {
+            target.GetComponent<Player_stats>().TakeDamage(TheDamage);
+            Debug.Log("L'ennemi a envoyé " + TheDamage + " points de dégâts");
+            attackTime = Time.time + attackRepeatTime;
+        }
     }
 
     // Fonction pour le retour à la base 
@@ -104,19 +144,17 @@ public class EnemyAI : MonoBehaviour
     {
         agent.speed = patrolingSpeed;
         agent.destination = basePosition;
+        transform.LookAt(transform.position);
         animator.SetFloat("State", 0.5f, 0.4f, Time.deltaTime);
     }
 
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
+        Gizmos.DrawWireSphere(transform.position, followDistance);
     }
 }
 
 /* Objectifs :
-
-    - Faire en NavMeshAgent qui ce deplace dans le labyrinthe, cherche le joueur, et l'attaque une fois trouver
-    - Faire une zone de detection
-    - Potentiellement limité la zone d'action 
+    
  */
