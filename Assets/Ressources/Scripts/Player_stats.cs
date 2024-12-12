@@ -24,6 +24,10 @@ public class Player_stats : MonoBehaviour
     public static float playerTime;
     public Text timer;
 
+    // Variables pour le son 
+    private AudioSource audioSource;
+    public AudioClip damageSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +36,8 @@ public class Player_stats : MonoBehaviour
         haveKey = false;
         //Le temps du que le joueur dois passer dans le niveau est défini  
         playerTime = manager.Leveltime;
+        audioSource = gameObject.GetComponent<AudioSource>();
+        keyImage.color = new Color(255f, 255f, 255, 0f);
     }
 
     // Update is called once per frame
@@ -47,10 +53,17 @@ public class Player_stats : MonoBehaviour
             //on actualise le temps passé dans le niveau 
             timer.text = string.Format("{0:00.00}", playerTime);
         }
+
+        // Si le joueur possède une clé
+        if (haveKey)
+        {
+            keyImage.color = new Color(255f, 255f, 255, 255f);
+        }
     }
 
     public void TakeDamage(float damage)
     {
+        audioSource.PlayOneShot(damageSound);
         currentHealth -= damage; 
         healthBar.fillAmount = currentHealth / startHealth;
 

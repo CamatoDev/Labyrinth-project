@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     // Variables pour le son 
     private AudioSource audioSource;
+    public AudioSource buttonAudioSource;
     private bool mute = false;
     public Sprite muteImage;
     public Sprite unmuteImage;
@@ -29,6 +30,7 @@ public class MainMenu : MonoBehaviour
     public void Play()
     {
         //Lacement du jeu 
+        buttonAudioSource.Play();
         sceneFader.FadeTo(levelToLoad);
     }
 
@@ -53,12 +55,14 @@ public class MainMenu : MonoBehaviour
     public void Help()
     {
         //
+        buttonAudioSource.Play();
         Debug.Log("Ouvertures des options de personnalisations");
     }
 
     // Fonction pour quitter le jeu 
     public void Quit()
     {
+        buttonAudioSource.Play();
         Application.Quit();
     }
 }
