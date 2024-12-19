@@ -14,15 +14,13 @@ public class Player_stats : MonoBehaviour
     public static bool isDead;
 
     // Si le joueur possède une clé
-    public bool haveKey = false;
-    public Image keyImage;
+    public bool haveKey;
 
     // Barre de vie 
     public Image healthBar;
 
     //Nombre de temps passé dans le niveau 
     public static float playerTime;
-    public Text timer;
 
     // Variables pour le son 
     private AudioSource audioSource;
@@ -34,33 +32,8 @@ public class Player_stats : MonoBehaviour
         isDead = false;
         currentHealth = startHealth;
         haveKey = false;
-        //Le temps du que le joueur dois passer dans le niveau est défini  
-        playerTime = manager.Leveltime;
         audioSource = gameObject.GetComponent<AudioSource>();
-        keyImage.color = new Color(255f, 255f, 255, 0f);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isDead)
-        {
-            //Le temps que le joueur passe est incrémenté à chaque seconde 
-            playerTime -= Time.deltaTime;
-            //On bloque la valeur du temps à 0
-            if (playerTime <= 0f)
-                playerTime = 0f;
-            //on actualise le temps passé dans le niveau 
-            timer.text = string.Format("{0:00.00}", playerTime);
-        }
-
-        // Si le joueur possède une clé
-        if (haveKey)
-        {
-            keyImage.color = new Color(255f, 255f, 255, 255f);
-        }
-    }
-
     public void TakeDamage(float damage)
     {
         audioSource.PlayOneShot(damageSound);
@@ -81,7 +54,3 @@ public class Player_stats : MonoBehaviour
         Destroy(gameObject, 2.0f);
     }
 }
-
-
-// Variable haveKey qui fais apparaitre et disparaite une image de clé quand le joueur en à une
-// (ou qui ecrit un numéro indicant son nombre de clé)

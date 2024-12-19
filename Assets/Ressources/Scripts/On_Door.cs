@@ -4,45 +4,57 @@ using UnityEngine;
 
 public class On_Door : MonoBehaviour
 {
+    //Reference au GameManager
+    public GameManager manager;
     // Variable des objet d'ouverture de la porte
+    float Distance;
     public GameObject doorClosed;
     public Transform partToRotate;
-    float angle;
+    public float openDistance = 1.3f;
 
     // Reference au joueur 
     public Transform player;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        angle = -80f;
-    }
+    // La clé 
+    public GameObject key;
+    // Indication dans le cas où le joueur arrive devant la sortie sans clé
+    public GameObject indication;
 
     // Update is called once per frame
     void Update()
     {
-        float Distance = Vector3.Distance(transform.position, player.position);
+        Distance = Vector3.Distance(transform.position, player.position);
 
-        if(Distance <= 1.5f)
+        if(Distance > openDistance)
         {
-            if (player.GetComponent<Player_stats>().haveKey)
-            {
-                OpenDoor();
+            // On donne les indication au joueur
+            indication.SetActive(false);
+        }
+        
+        if(Distance <= openDistance && !player.GetComponent<Player_stats>().haveKey)
+        {
+            // On donne les indication au joueur
+            indication.SetActive(true);
+        }
 
-                partToRotate.Rotate(0, angle, 0);
-            }
+        if(Distance <= openDistance && player.GetComponent<Player_stats>().haveKey)
+        {
+            OpenDoor();
         }
     }
 
     // Ouverture de la porte
     public void OpenDoor()
     {
+        key.SetActive(false);
         doorClosed.SetActive(false);
+        manager.GetComponent<CompleteLevel>().WinLevel();
+        // Lancer l'animation d'ouverture de la porte
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 1.5f);
+        Gizmos.DrawWireSphere(transform.position, openDistance);
     }
 }

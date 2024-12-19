@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PickUpItem : MonoBehaviour
 {
+    // La clé 
+    public GameObject key;
     //Bouton d'activation 
     public Button pickUp;
     //Distance d'activation 
@@ -57,6 +59,7 @@ public class PickUpItem : MonoBehaviour
         pickUp.gameObject.SetActive(false);
         player.GetComponent<Player_stats>().haveKey = true;
         Destroy(gameObject, 0.5f);
+        key.SetActive(true);
     }
 
     public void OnDrawGizmos()

@@ -8,11 +8,12 @@ public class EnemyAI : MonoBehaviour
 {
     // Variables pour gérer la navigation auto de l'ennemi
     private NavMeshAgent agent;
-    private FieldOfView fieldOfView;
+    public FieldOfView fieldOfView;     // Sur la tête (head) de l'ennemi
     private float Distance;
     private float DistanceToBase;
     private Vector3 basePosition;
     public float patrolingSpeed = 2.0f;
+    public float chaseSpeed = 3.0f;
     public float chaseRange = 4.0f;
     public float followDistance = 6.5f;
     bool followPlayer = false;
@@ -27,6 +28,8 @@ public class EnemyAI : MonoBehaviour
     // Puissance des dégats
     public float TheDamage = 20;
 
+    // Variables pour le son 
+    private AudioSource audioSource;
 
     // Variable pour la cible
     private Transform target;
@@ -38,7 +41,8 @@ public class EnemyAI : MonoBehaviour
     {
         // On passe les components dans les variables correspondante
         agent = gameObject.GetComponent<NavMeshAgent>();
-        fieldOfView = gameObject.GetComponent<FieldOfView>();
+        audioSource = gameObject.GetComponent<AudioSource>();
+        //fieldOfView = gameObject.GetComponent<FieldOfView>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = gameObject.GetComponent<Animator>();
         basePosition = transform.position;
@@ -119,6 +123,7 @@ public class EnemyAI : MonoBehaviour
     public void Chase()
     {
         followPlayer = true;
+        agent.speed = chaseSpeed;
         agent.destination = target.position;
         animator.SetFloat("State", 1.0f, 0.2f, Time.deltaTime);
     }
@@ -133,6 +138,7 @@ public class EnemyAI : MonoBehaviour
         //pas de cooldown
         if (Time.time > attackTime && target.GetComponent<Player_stats>().currentHealth > 0)
         {
+            audioSource.Play();
             target.GetComponent<Player_stats>().TakeDamage(TheDamage);
             Debug.Log("L'ennemi a envoyé " + TheDamage + " points de dégâts");
             attackTime = Time.time + attackRepeatTime;

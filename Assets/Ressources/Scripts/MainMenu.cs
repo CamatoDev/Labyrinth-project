@@ -57,6 +57,7 @@ public class MainMenu : MonoBehaviour
         //
         buttonAudioSource.Play();
         Debug.Log("Ouvertures des options de personnalisations");
+        sceneFader.FadeTo("Tutorial 1");
     }
 
     // Fonction pour quitter le jeu 

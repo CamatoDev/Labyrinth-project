@@ -12,7 +12,6 @@ public class OpeningMecanism : MonoBehaviour
     public GameObject socket;
 
     // Pour ramasser l'objet 
-    bool canTake = false;
     public Button pickUpButton;
 
     // Distance de ramassage de l'objet 
