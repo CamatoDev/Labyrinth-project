@@ -1,60 +1,64 @@
-# 🌀 **Labyrinthe 2D avec Contrôles Simples**
+# 🌀 **Labyrinthe 2D avec Contrôles Simples**  
 
 ## 🎮 **Description**  
-**Labyrinthe 2D** est un jeu minimaliste conçu pour offrir une expérience amusante et accessible. Le but est simple : naviguer à travers un labyrinthe en utilisant des contrôles intuitifs. Ce projet met l’accent sur une interface utilisateur épurée et un gameplay fluide, parfait pour les joueurs de tout âge.
+**Labyrinthe 2D** est un jeu d’aventure captivant où le joueur doit parcourir un labyrinthe tout en esquivant des gardes pour trouver une clé et ouvrir la porte de sortie avant la fin du temps imparti. Ce projet met en avant une expérience ludique grâce à des fonctionnalités enrichies, des animations fluides, et une interface intuitive.  
 
 ---
 
 ## 🚀 **Objectifs du Projet**  
-- Offrir une expérience de jeu simple mais engageante grâce à un design minimaliste.  
-- Développer des contrôles intuitifs adaptés aux plateformes mobiles et desktop.  
-- Explorer les bases du développement de jeux vidéo interactifs en 2D.
+- Créer un gameplay engageant combinant exploration et stratégie.  
+- Offrir une interface et des contrôles simples mais efficaces pour les joueurs.  
+- Intégrer des éléments interactifs pour rendre l’expérience plus immersive.  
 
 ---
 
-## ✨ **Caractéristiques Principales**  
-- **Graphismes simples et clairs** : idéal pour une prise en main rapide.  
-- **Contrôles intuitifs** : jouabilité optimisée pour divers supports.  
-- **Progression dynamique** : des niveaux adaptés à l’évolution du joueur.  
-- **Facilité d’extension** : possibilité d’ajouter de nouveaux niveaux et fonctionnalités.
+## ✨ **Fonctionnalités Actuelles**  
+
+### Gameplay :  
+- **Personnage jouable** : Un héros animé, capable de se déplacer dans le labyrinthe grâce à un joystick dynamique.  
+- **Ennemis actifs** : Des gardes dotés d’un champ de vision (Field of View), capables de détecter et de poursuivre le joueur.  
+- **Clé cachée** : Un objet essentiel à trouver pour ouvrir la porte de sortie.  
+- **Porte finale** : Un portail marquant la victoire une fois franchi.  
+
+### Éléments interactifs :  
+- **Sons dynamiques** : Effets sonores immersifs pour le gameplay et l’interface utilisateur (UI).  
+- **Écrans de victoire et de défaite** : Pour informer clairement le joueur de l’issue de sa tentative.  
+
+### Interface et Contrôles :  
+- **Joystick dynamique** : Un contrôle ergonomique pour diriger le personnage dans le labyrinthe.  
+- **Limite de temps** : Une contrainte pour ajouter du défi et de l’intensité.  
 
 ---
 
 ## 📋 **État Actuel**  
-- Réalisation du premier test d’interface utilisateur.  
-- Développement en cours des mécanismes de base et des niveaux.  
-- Préparation pour l’ajout de fonctionnalités supplémentaires.  
-
----
-
-## 🌟 **Valeur du Projet**  
-Ce projet permet de :  
-- Se plonger dans les principes fondamentaux de la conception d'interfaces utilisateur pour les jeux.  
-- Explorer le processus de développement, de la conception initiale aux tests.  
-- Créer une base solide pour des projets de jeux vidéo plus complexes.
+Le projet est en phase bêta jouable avec toutes les fonctionnalités essentielles implémentées. Des améliorations et tests finaux sont prévus pour :  
+- Optimiser le gameplay.  
+- Ajouter des niveaux supplémentaires.  
+- Intégrer des options de personnalisation.  
 
 ---
 
 ## 📚 **Technologies utilisées**  
-- **Langage** : [ex. C++, C#, Python]  
-- **Moteur de jeu** : [ex. Unity, Godot, etc.]  
-- **Outils graphiques** : [ex. GIMP, Photoshop, Aseprite]  
-- **Versionnage** : Git et GitHub.
+- **Langage** : C#  
+- **Moteur de jeu** : Unity  
+- **Assets graphiques et animations** : Unity Store et Unity 
+- **Sons et Musiques** : Telechager en OpenSource.  
+- **Versionnage** : Git et GitHub.  
 
 ---
 
 ## 🤝 **Comment contribuer**  
-Les contributions sont les bienvenues ! Voici comment vous pouvez aider :  
-1. Signaler des bugs ou des incohérences via les issues.  
-2. Suggérer des améliorations ou des fonctionnalités.  
-3. Proposer des idées de niveaux ou de designs.  
+Les contributions sont les bienvenues ! Vous pouvez :  
+1. Jouer à la version bêta et partager vos retours.  
+2. Proposer des idées pour de nouvelles fonctionnalités ou niveaux.  
+3. Contribuer en améliorant le code ou les ressources artistiques.  
 
 ---
 
 ## 📢 **Contactez-moi**  
-Pour toute question ou suggestion, n’hésitez pas à :  
-- Ouvrir une issue sur ce dépôt.  
-- Me contacter sur LinkedIn : [Ajoutez votre lien]  
-- Envoyer un email : [Ajoutez votre email]  
+- LinkedIn : https://www.linkedin.com/in/marco-tomba-574b042b7/
+- Email : mrctomba@gmail.com
 
-> **Suivez ce projet pour découvrir son évolution et ses mises à jour !**  
+> **Téléchargez et testez la bêta dès maintenant pour vivre l’expérience de Labyrinthe 2D !**  
+
+---
