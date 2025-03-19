@@ -6,7 +6,15 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAI : MonoBehaviour
 {
+    // Variable pour la cible
+    private Transform target;
+    // Variables pour le son 
+    private AudioSource audioSource;
+    // Pour la gestion des animations 
+    private Animator animator;
+
     // Variables pour gérer la navigation auto de l'ennemi
+    [Header("Ennemy Navigation")]
     private NavMeshAgent agent;
     public FieldOfView fieldOfView;     // Sur la tête (head) de l'ennemi
     private float Distance;
@@ -18,23 +26,16 @@ public class EnemyAI : MonoBehaviour
     public float followDistance = 6.5f;
     bool followPlayer = false;
 
-    // Porté des attaques
+    //pour gérer l'attaque de l'ennemi
+    [Header("Ennemy Stats")]
+    public float enemyHealth;
+    private bool isDeath = false;// Porté des attaques
     public float attackRange = 1.3f;
-
     // Timing des attques 
     public float attackRepeatTime = 2f;
     private float attackTime;
-
     // Puissance des dégats
     public float TheDamage = 20;
-
-    // Variables pour le son 
-    private AudioSource audioSource;
-
-    // Variable pour la cible
-    private Transform target;
-    // Pour la gestion des animations 
-    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -53,52 +54,55 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Calcul de la distance entre l'ennemi et le joueur 
-        if(target != null)
+        if (!isDeath)
         {
-            Distance = Vector3.Distance(transform.position, target.position);
-        }
-
-        // Calcul de la distance entre l'ennemi et sa position de base 
-        DistanceToBase = Vector3.Distance(basePosition, transform.position);
-
-        if (target != null)
-        {
-            if(!fieldOfView.canSeePlayer && DistanceToBase <= 0.6 && !followPlayer)
+            // Calcul de la distance entre l'ennemi et le joueur 
+            if (target != null)
             {
-                //On se repose
-                Idle();
-                // On patrouille simplement 
-                //Patroling();
+                Distance = Vector3.Distance(transform.position, target.position);
             }
 
-            if (fieldOfView.canSeePlayer && Distance > attackRange)
-            {
-                // On pourchase le joueur 
-                Chase();
-            }
-            if (followPlayer)
-            {
-                // On pourchase le joueur 
-                Chase();
-            }
+            // Calcul de la distance entre l'ennemi et sa position de base 
+            DistanceToBase = Vector3.Distance(basePosition, transform.position);
 
-            if(fieldOfView.canSeePlayer && Distance <= attackRange)
+            if (target != null)
             {
-                // On attaque le joueur 
-                Attack();
-            }
+                if (!fieldOfView.canSeePlayer && DistanceToBase <= 0.6 && !followPlayer)
+                {
+                    //On se repose
+                    Idle();
+                    // On patrouille simplement 
+                    //Patroling();
+                }
 
-            if(!fieldOfView.canSeePlayer && DistanceToBase > 0.6 && !followPlayer || Player_stats.isDead)
-            {
-                // On rentre à la base 
-                BackToBase();
-            }
+                if (fieldOfView.canSeePlayer && Distance > attackRange)
+                {
+                    // On pourchase le joueur 
+                    Chase();
+                }
+                if (followPlayer)
+                {
+                    // On pourchase le joueur 
+                    Chase();
+                }
 
-            // On arrête de poursuivre le jouer si 
-            if(Distance >= followDistance)
-            {
-                followPlayer = false;
+                if (fieldOfView.canSeePlayer && Distance <= attackRange)
+                {
+                    // On attaque le joueur 
+                    Attack();
+                }
+
+                if (!fieldOfView.canSeePlayer && DistanceToBase > 0.6 && !followPlayer || Player_stats.isDead)
+                {
+                    // On rentre à la base 
+                    BackToBase();
+                }
+
+                // On arrête de poursuivre le jouer si 
+                if (Distance >= followDistance)
+                {
+                    followPlayer = false;
+                }
             }
         }
     }
@@ -154,13 +158,38 @@ public class EnemyAI : MonoBehaviour
         animator.SetFloat("State", 0.5f, 0.4f, Time.deltaTime);
     }
 
+    //fonction pour appliqué les dégats sur l'enemi
+    public void ApplyDamage(float TheDamage)
+    {
+        if (!isDeath)
+        {
+            //animator.SetFloat("State", 0.0f, 0.2f, Time.deltaTime); //Valeur de coups encaisser au blend tree
+            enemyHealth = enemyHealth - TheDamage;
+            print(gameObject.name + " à subit" + TheDamage + " points de dégâts");
+
+            if (enemyHealth <= 0 && !isDeath)
+            {
+                animator.SetFloat("State", 0.0f, 0.2f, Time.deltaTime);
+                Dead();
+            }
+        }
+    }
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, followDistance);
     }
+
+    //fonction pour la mort de l'enemi 
+    public void Dead()
+    {
+        isDeath = true;
+        animator.SetFloat("State", 0.0f, 0.2f, Time.deltaTime); //Valeur de mort dans le blend tree
+        // Sons de mort.
+        Destroy(transform.gameObject, 1);
+    }
 }
 
 /* Objectifs :
-    
+    Fonction pour prendre les dégats et gestions des points de vie (élimination direct).
  */

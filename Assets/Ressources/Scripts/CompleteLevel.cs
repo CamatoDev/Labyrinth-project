@@ -8,36 +8,35 @@ using UnityEngine.UIElements;
 
 public class CompleteLevel : MonoBehaviour
 {
-    //Reférence à scene fader 
-    public SceneFader sceneFader;
-
-    //menu de victoire 
-    public GameObject levelWin;
-    public Text winMessage;
-    public string EndLabyrinthMessage;
-
+    // Reference au joueur 
+    public Transform player;
+    // La clé 
+    public GameObject key;
     //Source audio pour les boutons
     public AudioSource buttons;
 
+    public string levelToLoad;
+    //Reférence à scene fader 
+    [Header("UI")]
+    public SceneFader sceneFader;
+    // Indication dans le cas où le joueur arrive devant la sortie sans clé
+    public GameObject indication;
+
+    //menu de victoire 
+    [Header("Win Menu")]
+    public GameObject levelWin;
+    public Text winMessage;
+    public string EndLabyrinthMessage;
     //Source audio pour la victoire
     public AudioSource winLevelSound;
 
-    public string levelToLoad;
-
     // Variable des objet d'ouverture de la porte
     float Distance;
+    [Header("Open Door Variable")]
     public GameObject door;
     public GameObject doorClosed;
     public Transform partToRotate;
     public float openDistance = 1.3f;
-
-    // Reference au joueur 
-    public Transform player;
-
-    // La clé 
-    public GameObject key;
-    // Indication dans le cas où le joueur arrive devant la sortie sans clé
-    public GameObject indication;
 
     // Update is called once per frame
     void Update()
