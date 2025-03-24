@@ -11,9 +11,6 @@ public class Player_mov : MonoBehaviour
     public bool isDead = false;
     //attaque du personnage
     [Header("Player Attack")]
-    public float damage = 100f;
-    public float attackColdown;
-    private float currentColdown;
     public float attackRange;
     private bool isAttacking;
     //Pour la ligne d'attaque 
@@ -57,11 +54,6 @@ public class Player_mov : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(rigidbody.velocity);
             }
-            else
-            {
-                //walk.Stop();
-            }
-
                 //On met à jour l'animation de déplacement
                 animator.SetFloat("moveAmount", moveAmount, 0.2f, Time.deltaTime);
         }
@@ -72,35 +64,23 @@ public class Player_mov : MonoBehaviour
         }
     }
 
-    //private void Update()
-    //{
-    //    while(Mathf.Clamp01(Mathf.Abs(joystick.Vertical) + Mathf.Abs(joystick.Horizontal)) != 0)
-    //    {
-    //        walk.Play();
-    //    }
-    //}
-
-    //fonction pour l'attaque 
+    //fonction pour l'attaque
     public void Attack()
     {
         if (!isDead)
         {
-            if (!isAttacking)
+            animator.SetTrigger("Punch");
+            audioSource.PlayOneShot(punch);
+            RaycastHit hit;
+
+            if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
             {
-                animator.SetTrigger("Punch");
-                audioSource.PlayOneShot(punch);
-                RaycastHit hit;
+                Debug.DrawLine(rayHit.transform.position, hit.point, Color.red);
 
-                if (Physics.Raycast(rayHit.transform.position, transform.TransformDirection(Vector3.forward), out hit, attackRange))
-                {
-                    Debug.DrawLine(rayHit.transform.position, hit.point, Color.red);
-
-                    if (hit.transform.tag == "Enemy")
-                    {
-                        hit.transform.GetComponent<EnemyAI>().ApplyDamage(damage);
-                    }
-                    isAttacking = true;
-                }
+                 if (hit.transform.tag == "Enemy")
+                 {
+                    hit.transform.GetComponent<EnemyAI>().ApplyDamage(player_Stats.damage);
+                 }
             }
         }
     }
@@ -117,4 +97,4 @@ public class Player_mov : MonoBehaviour
 /* Objectifs :
     - Faire des UI qui apparaissent en fonction de la position du joueur pour donner des indication ou activé des mécanismes
     - Faire une fonction d'attaque pour le joueur (The la guardian).
- */ 
+ */

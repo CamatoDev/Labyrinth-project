@@ -165,7 +165,7 @@ public class EnemyAI : MonoBehaviour
         {
             //animator.SetFloat("State", 0.0f, 0.2f, Time.deltaTime); //Valeur de coups encaisser au blend tree
             enemyHealth = enemyHealth - TheDamage;
-            print(gameObject.name + " à subit" + TheDamage + " points de dégâts");
+            print(gameObject.name + " à subit " + TheDamage + " points de dégâts");
 
             if (enemyHealth <= 0 && !isDeath)
             {
@@ -184,6 +184,7 @@ public class EnemyAI : MonoBehaviour
     public void Dead()
     {
         isDeath = true;
+        //animator.SetTrigger("Die");
         animator.SetFloat("State", 0.0f, 0.2f, Time.deltaTime); //Valeur de mort dans le blend tree
         // Sons de mort.
         Destroy(transform.gameObject, 1);
