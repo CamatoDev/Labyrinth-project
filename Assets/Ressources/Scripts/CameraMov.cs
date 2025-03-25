@@ -7,9 +7,11 @@ public class CameraMov : MonoBehaviour
     // Variables pour le joueur 
     private Transform player;
 
-    //Variables pour la camera 
+    // Variables pour la position de la camera 
     public float cameraOffsetX = 3.0f;
     public float cameraOffsetZ = 0f;
+
+    // Variable pour la rotation de la camera
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,10 @@ public class CameraMov : MonoBehaviour
     {
         if (player != null)
         {
+            // Gestion position
             transform.position = new Vector3(player.position.x + cameraOffsetX, transform.position.y, player.position.z + cameraOffsetZ);
+            
+            // Gestion Rotation 
 
         }
     }

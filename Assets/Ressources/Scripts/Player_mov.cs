@@ -15,6 +15,7 @@ public class Player_mov : MonoBehaviour
     private bool isAttacking;
     //Pour la ligne d'attaque 
     public GameObject rayHit;
+    public AudioClip punch;
 
     // Variables pour le joystick
     [Header("Joystick Settings")]
@@ -26,8 +27,6 @@ public class Player_mov : MonoBehaviour
     private Animator animator;
     private AudioSource audioSource;
     public AudioSource walk;
-
-    public AudioClip punch;
     //public AudioClip walk;
 
     // Start is called before the first frame update

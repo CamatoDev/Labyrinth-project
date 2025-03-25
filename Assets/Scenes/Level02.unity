@@ -9877,13 +9877,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  damage: 100
-  attackColdown: 1
   attackRange: 1.2
   rayHit: {fileID: 237081007}
+  punch: {fileID: 8300000, guid: e5667b49dfec51341a833cb913dd5a77, type: 3}
   joystick: {fileID: 240851163782096147}
   moveSpeed: 5
-  punch: {fileID: 8300000, guid: e5667b49dfec51341a833cb913dd5a77, type: 3}
+  walk: {fileID: 0}
 --- !u!4 &2209536288509346677
 Transform:
   m_ObjectHideFlags: 0
@@ -16462,8 +16461,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.6465745
+  m_Radius: 0.3
+  m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.82179594, z: 0}
 --- !u!1 &5780202643308024237
@@ -17253,7 +17252,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!33 &6191482277726308834
 MeshFilter:
@@ -17981,7 +17980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 236042176}
   currentHealth: 100
-  damage: 10
+  damage: 100
   haveKey: 0
   healthBar: {fileID: 1263252113}
   damageSound: {fileID: 8300000, guid: 93c6de7f461306045b2b388cde766330, type: 3}
