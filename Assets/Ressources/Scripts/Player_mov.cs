@@ -27,7 +27,7 @@ public class Player_mov : MonoBehaviour
     private Animator animator;
     private AudioSource audioSource;
     public AudioSource walk;
-    //public AudioClip walk;
+    public AudioClip walkClip;
 
     // Start is called before the first frame update
     void Start()
@@ -53,14 +53,27 @@ public class Player_mov : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(rigidbody.velocity);
             }
-                //On met à jour l'animation de déplacement
-                animator.SetFloat("moveAmount", moveAmount, 0.2f, Time.deltaTime);
+
+            if (moveAmount != 0)
+            {
+                if (!walk.isPlaying)
+                {
+                    walk.PlayOneShot(walkClip);
+                }
+            }
+
+            //On met à jour l'animation de déplacement
+            animator.SetFloat("moveAmount", moveAmount, 0.2f, Time.deltaTime);
         }
         else
         {
             //On met à jour l'animation de mort
             animator.SetFloat("moveAmount", 2, 0.2f, Time.deltaTime);
         }
+    }
+
+    private void Update()
+    {
     }
 
     //fonction pour l'attaque

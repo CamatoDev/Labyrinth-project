@@ -139,7 +139,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0.5
+  bundleVersion: 1.0.6
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -851,11 +851,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 04eb2d35-04ae-43d9-a98a-e74327d3ed3f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Labyrinth-project
+  organizationId: camato_desu
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
